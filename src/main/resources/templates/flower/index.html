@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Цветы</title>
+    <style>
+    th,td{
+      border: solid black;
+    }
+  </style>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<h1>Цветы</h1>
+
+<a href="/flower/add" class="btn btn-success">Добавить цветок</a>
+
+<table style="border: solid black">
+    <tr>
+        <th>Название</th>
+        <th>Тип</th>
+        <th>Цвет</th>
+        <th>Запах</th>
+        <th>Цена</th>
+    </tr>
+    <tr th:each="el : ${flower_list}">
+        <td th:text="${el.name}"></td>
+        <td th:text="${el.type}"></td>
+        <td th:text="${el.color}"></td>
+        <td th:text="${el.smell}"></td>
+        <td th:text="${el.cost}"></td>
+        <!--        <td>-->
+        <!--            <a th:href="'/flower/detail/' + ${el.UID}">Редактировать</a>-->
+        <!--        </td>-->
+    </tr>
+</table>
+
+</body>
+</html>

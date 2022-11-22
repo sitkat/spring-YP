@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление цветка</title>
+    <style>
+    th,td{
+      border: solid black;
+    }
+  </style>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+<h1>Добавить цветок</h1>
+
+<form method="post">
+    <label>Название</label>
+    <input class="form-control" type="text" name="name">
+    <label>Тип</label>
+    <input class="form-control" type="text" name="type">
+    <label>Цвет</label>
+    <input class="form-control" type="text" name="color">
+    <label>Запах</label>
+    <input class="form-control" type="text" name="smell">
+    <label>Цена</label>
+    <input class="form-control" type="number" name="cost">
+
+    <input class="btn btn-success" type="submit" value="Добавить цветок">
+</form>
+
+<a class="btn btn-danger" href="/flower/">Назад</a>
+
+</body>
+</html>

@@ -4,9 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping("/calculator")
 public class MainController {
 
     @GetMapping("/main")
@@ -16,8 +18,7 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String post_index(
-            @RequestParam(name = "star", required = false, defaultValue = "0") Integer name_star) {
+    public String post_index(@RequestParam(name = "star", required = false, defaultValue = "0") Integer name_star) {
         return "info";
     }
 
