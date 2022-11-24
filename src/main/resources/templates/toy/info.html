@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Игрушки</title>
+    <link rel="stylesheet" href="/style.css">
+    </head>
+<body>
+<div class="container">
+    <h1 th:text="${one_toy.name}"/>
+
+    <div class="container">
+        <p style="font-size: 28px" th:text="'Тип:  ' + ${one_toy.type}"/>
+        <p style="font-size: 28px" th:text="'Форма: ' + ${one_toy.form}"/>
+        <p style="font-size: 28px" th:text="'Высота: ' + ${one_toy.height}"/>
+        <p style="font-size: 28px" th:text="'Цена: ' + ${one_toy.cost}"/>
+    </div>
+
+    <a type="submit" th:href="'/toy/detail/' + ${one_toy.id} + '/upd'"
+       class="button-edit">Редактировать</a>
+    <a type="submit" class="button-delete" th:href="'/toy/detail/' + ${one_toy.id} + '/del'">Удалить</a>
+    <a href="/toy/" class="button-back">Назад</a>
+</div>
+</body>
+</html>

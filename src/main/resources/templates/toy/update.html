@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование игрушки</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<h1>Редактировать игрушку</h1>
+
+<form method="post">
+    <label>Название</label>
+    <input type="text" th:value="${object.name}" name="name">
+    <p/>
+    <label>Тип</label>
+    <input type="text" th:value="${object.type}" name="type">
+    <p/>
+    <label>Форма</label>
+    <input type="text" th:value="${object.form}" name="form">
+    <p/>
+    <label>Высота</label>
+    <input type="number" th:value="${object.height}" name="height">
+    <p/>
+    <label>Цена</label>
+    <input type="number" th:value="${object.cost}" name="cost">
+    <p/>
+
+    <input class="button-edit" type="submit" value="Сохранить изменения"/>
+    <a class="button-back" href="/toy/">Назад</a>
+</form>
+
+</body>
+</html>

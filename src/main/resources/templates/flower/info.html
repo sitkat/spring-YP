@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Цветы</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${one_flower.name}"/>
+
+    <div class="container">
+        <p style="font-size: 28px" th:text="'Тип:  ' + ${one_flower.type}"/>
+        <p style="font-size: 28px" th:text="'Цвет: ' + ${one_flower.color}"/>
+        <p style="font-size: 28px" th:text="'Запах: ' + ${one_flower.smell}"/>
+        <p style="font-size: 28px" th:text="'Цена: ' + ${one_flower.cost}"/>
+    </div>
+
+    <a type="submit" th:href="'/flower/detail/' + ${one_flower.id} + '/upd'"
+       class="button-edit">Редактировать</a>
+    <a type="submit" class="button-delete" th:href="'/flower/detail/' + ${one_flower.id} + '/del'">Удалить</a>
+    <a href="/flower/" class="button-back">Назад</a>
+</div>
+</body>
+</html>
