@@ -9,21 +9,26 @@
 <body>
 <h1>Добавить игрушку</h1>
 
-<form method="post">
+<form method="post" th:object="${toy}">
     <label>Название</label>
-    <input type="text" name="name">
+    <input th:field="*{name}" type="text" name="name">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"/>
     <p/>
     <label>Тип</label>
-    <input type="text" name="type">
+    <input th:field="*{type}" type="text" name="type">
+    <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"/>
     <p/>
     <label>Размер</label>
-    <input type="text" name="form">
+    <input th:field="*{form}" type="text" name="form">
+    <div th:if="${#fields.hasErrors('form')}" th:errors="*{form}" style="color: red"/>
     <p/>
     <label>Высота</label>
-    <input type="number" name="height">
+    <input th:field="*{height}" type="number" name="height">
+    <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" style="color: red"/>
     <p/>
     <label>Цена</label>
-    <input type="number" name="cost">
+    <input th:field="*{cost}" type="number" name="cost">
+    <div th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" style="color: red"/>
     <p/>
 
     <input class="button-add" type="submit" value="Добавить игрушку">

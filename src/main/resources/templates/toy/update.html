@@ -8,21 +8,26 @@
 <body>
 <h1>Редактировать игрушку</h1>
 
-<form method="post">
+<form method="post" th:object="${toy}">
     <label>Название</label>
-    <input type="text" th:value="${object.name}" name="name">
+    <input type="text" th:field="*{name}" name="name">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"/>
     <p/>
     <label>Тип</label>
-    <input type="text" th:value="${object.type}" name="type">
+    <input type="text" th:field="*{type}" name="type">
+    <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"/>
     <p/>
     <label>Форма</label>
-    <input type="text" th:value="${object.form}" name="form">
+    <input type="text" th:field="*{form}" name="form">
+    <div th:if="${#fields.hasErrors('form')}" th:errors="*{form}" style="color: red"/>
     <p/>
     <label>Высота</label>
-    <input type="number" th:value="${object.height}" name="height">
+    <input type="number" th:field="*{height}" name="height">
+    <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" style="color: red"/>
     <p/>
     <label>Цена</label>
-    <input type="number" th:value="${object.cost}" name="cost">
+    <input type="number" th:field="*{cost}" name="cost">
+    <div th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}" style="color: red"/>
     <p/>
 
     <input class="button-edit" type="submit" value="Сохранить изменения"/>

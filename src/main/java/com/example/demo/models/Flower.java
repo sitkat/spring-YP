@@ -4,9 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Entity
 public class Flower {
@@ -14,18 +12,25 @@ public class Flower {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Size(min = 2, max = 50, message = "Неверная строка")
     @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 2, max = 50, message = "Неверная строка")
     private String name;
 
-    @Size(min = 2, max = 50, message = "Строка должна быть от 4 до 50 символов")
-    @NotNull()
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 4, max = 50, message = "Неверная строка")
     private String type;
 
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 4, max = 50, message = "Неверная строка")
     private String color;
 
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 4, max = 50, message = "Неверная строка")
     private String smell;
 
+    @NotNull(message = "Заполните поле")
+    @DecimalMin(value = "0.0", message = "Число не может быть отрицательным", inclusive = false)
+    @DecimalMax(value = "99999.99", message = "Некорректный ввод", inclusive = false)
     private Double cost;
 
     public Flower() {

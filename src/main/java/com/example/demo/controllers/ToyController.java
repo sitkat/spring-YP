@@ -5,8 +5,10 @@ import com.example.demo.repositories.ToyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -23,18 +25,34 @@ public class ToyController {
         return "toy/index";
     }
 
+//    @GetMapping("/add")
+//    public String addView() { return "toy/add-toy"; }
+//
+//    @PostMapping("/add")
+//    public String AddToy(
+//            @RequestParam(name = "name") String name,
+//            @RequestParam(name = "type") String type,
+//            @RequestParam(name = "form") String form,
+//            @RequestParam(name = "height") int height,
+//            @RequestParam(name = "cost") double cost
+//    ){
+//        Toy new_toy = new Toy(name, type, form, height, cost);
+//        toyRepository.save(new_toy);
+//        return "redirect:/toy/";
+//    }
+
     @GetMapping("/add")
-    public String addView() { return "toy/add-toy"; }
+    public String addView(Toy toy) { return "toy/add-toy"; }
 
     @PostMapping("/add")
-    public String AddToy(
-            @RequestParam(name = "name") String name,
-            @RequestParam(name = "type") String type,
-            @RequestParam(name = "form") String form,
-            @RequestParam(name = "height") int height,
-            @RequestParam(name = "cost") double cost
-    ){
-        Toy new_toy = new Toy(name, type, form, height, cost);
+    public String AddToy(@Valid Toy toy, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            return "toy/add-toy";
+        }
+
+        Toy new_toy = new Toy(toy.getName(), toy.getType(), toy.getForm(),
+                toy.getHeight(), toy.getCost());
         toyRepository.save(new_toy);
         return "redirect:/toy/";
     }
@@ -64,33 +82,45 @@ public class ToyController {
             @PathVariable Long id,
             Model model
     ) {
-        model.addAttribute("object",
+        model.addAttribute("toy",
                 toyRepository.findById(id).orElseThrow());
         return "toy/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateView(
-            @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam String type,
-            @RequestParam String form,
-            @RequestParam Integer height,
-            @RequestParam Double cost
-    ) {
-        Toy toy = toyRepository.findById(id).orElseThrow();
+    public String updateView(@Valid Toy toy, BindingResult bindingResult) {
 
-        toy.setName(name);
-        toy.setType(type);
-        toy.setForm(form);
-        toy.setHeight(height);
-        toy.setCost(cost);
-
+        if (bindingResult.hasErrors()) {
+            return "toy/update";
+        }
 
         toyRepository.save(toy);
 
         return "redirect:/toy/detail/" + toy.getId();
     }
+
+    //    @PostMapping("/detail/{id}/upd")
+//    public String updateView(
+//            @PathVariable Long id,
+//            @RequestParam String name,
+//            @RequestParam String type,
+//            @RequestParam String form,
+//            @RequestParam Integer height,
+//            @RequestParam Double cost
+//    ) {
+//        Toy toy = toyRepository.findById(id).orElseThrow();
+//
+//        toy.setName(name);
+//        toy.setType(type);
+//        toy.setForm(form);
+//        toy.setHeight(height);
+//        toy.setCost(cost);
+//
+//
+//        toyRepository.save(toy);
+//
+//        return "redirect:/toy/detail/" + toy.getId();
+//    }
 
     @GetMapping("/filter")
     public String filter(@RequestParam(name = "name") String name,

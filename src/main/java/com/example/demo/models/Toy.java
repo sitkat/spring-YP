@@ -4,16 +4,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 @Entity
 public class Toy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 2, max = 50, message = "Неверная строка")
     private String name;
+
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 4, max = 50, message = "Неверная строка")
     private String type;
+
+    @NotBlank(message = "Строка не должна быть пустой")
+    @Size(min = 4, max = 50, message = "Неверная строка")
     private String form;
+
+    @NotNull(message = "Заполните поле")
+    @DecimalMin(value = "0.0", message = "Число не может быть отрицательным", inclusive = false)
+    @DecimalMax(value = "200.0", message = "Некорректный ввод", inclusive = false)
     private Integer height;
+
+    @NotNull(message = "Заполните поле")
+    @DecimalMin(value = "0.0", message = "Число не может быть отрицательным", inclusive = false)
+    @DecimalMax(value = "99999.99", message = "Некорректный ввод", inclusive = false)
     private Double cost;
 
     public Toy() {

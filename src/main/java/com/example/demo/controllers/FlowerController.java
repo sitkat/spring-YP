@@ -55,6 +55,10 @@ public class FlowerController {
             return "flower/add-flower";
         }
 
+        Flower new_flower = new Flower(flower.getName(), flower.getType(),
+                flower.getColor(), flower.getSmell(), flower.getCost());
+        flowerRepository.save(new_flower);
+
         return "redirect:/flower/";
     }
 
@@ -83,33 +87,45 @@ public class FlowerController {
             @PathVariable Long id,
             Model model
     ) {
-        model.addAttribute("object",
+        model.addAttribute("flower",
                 flowerRepository.findById(id).orElseThrow());
         return "flower/update";
     }
 
     @PostMapping("/detail/{id}/upd")
-    public String updateView(
-            @PathVariable Long id,
-            @RequestParam String name,
-            @RequestParam String type,
-            @RequestParam String color,
-            @RequestParam String smell,
-            @RequestParam Double cost
-            ) {
-        Flower flower = flowerRepository.findById(id).orElseThrow();
+    public String updateView(@Valid Flower flower, BindingResult bindingResult) {
 
-        flower.setName(name);
-        flower.setType(type);
-        flower.setColor(color);
-        flower.setSmell(smell);
-        flower.setCost(cost);
-
+        if (bindingResult.hasErrors()) {
+            return "flower/update";
+        }
 
         flowerRepository.save(flower);
 
         return "redirect:/flower/detail/" + flower.getId();
     }
+
+    //    @PostMapping("/detail/{id}/upd")
+//    public String updateView(
+//            @PathVariable Long id,
+//            @RequestParam String name,
+//            @RequestParam String type,
+//            @RequestParam String color,
+//            @RequestParam String smell,
+//            @RequestParam Double cost
+//    ) {
+//        Flower flower = flowerRepository.findById(id).orElseThrow();
+//
+//        flower.setName(name);
+//        flower.setType(type);
+//        flower.setColor(color);
+//        flower.setSmell(smell);
+//        flower.setCost(cost);
+//
+//
+//        flowerRepository.save(flower);
+//
+//        return "redirect:/flower/detail/" + flower.getId();
+//    }
 
     @GetMapping("/filter")
     public String filter(@RequestParam(name = "name") String name,
