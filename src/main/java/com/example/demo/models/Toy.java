@@ -1,9 +1,6 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
@@ -16,9 +13,10 @@ public class Toy {
     @Size(min = 2, max = 50, message = "Неверная строка")
     private String name;
 
-    @NotBlank(message = "Строка не должна быть пустой")
-    @Size(min = 4, max = 50, message = "Неверная строка")
-    private String type;
+//    @NotBlank(message = "Строка не должна быть пустой")
+//    @Size(min = 4, max = 50, message = "Неверная строка")
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private Type type;
 
     @NotBlank(message = "Строка не должна быть пустой")
     @Size(min = 4, max = 50, message = "Неверная строка")
@@ -37,7 +35,7 @@ public class Toy {
     public Toy() {
     }
 
-    public Toy(String name, String type, String form, Integer height, Double cost) {
+    public Toy(String name, Type type, String form, Integer height, Double cost) {
         this.name = name;
         this.type = type;
         this.form = form;
@@ -61,11 +59,11 @@ public class Toy {
         this.name = name;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

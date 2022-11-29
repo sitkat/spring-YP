@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+<!--    <meta charset="UTF-8">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Добавление игрушки</title>
     <link rel="stylesheet" href="/style.css">
 </head>
@@ -15,8 +16,15 @@
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"/>
     <p/>
     <label>Тип</label>
-    <input th:field="*{type}" type="text" name="type">
-    <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"/>
+
+    <select  name="nameType">
+        <div th:each="element : ${type_list}">
+            <option th:text="${element.nameType}" th:value="${element.id}"></option>
+        </div>
+    </select>
+
+<!--    <input th:field="*{type}" type="text" name="type">-->
+<!--    <div th:if="${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"/>-->
     <p/>
     <label>Размер</label>
     <input th:field="*{form}" type="text" name="form">

@@ -1,7 +1,9 @@
 package com.example.demo.controllers;
 
 import com.example.demo.models.Toy;
+import com.example.demo.models.Type;
 import com.example.demo.repositories.ToyRepository;
+import com.example.demo.repositories.ToyTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,53 +17,41 @@ import java.util.List;
 @RequestMapping("/toy")
 public class ToyController {
     @Autowired
-    ToyRepository toyRepository;
+    public ToyRepository toyRepository;
+
+    @Autowired
+    public ToyTypeRepository toyTypeRepository;
 
     @GetMapping("/")
     public String index(Model model) {
+        Iterable<Type> type = toyTypeRepository.findAll();
         Iterable<Toy> toyIterable = toyRepository.findAll();
         model.addAttribute("toy_list", toyIterable);
+        model.addAttribute("type", type);
 
         return "toy/index";
     }
 
-//    @GetMapping("/add")
-//    public String addView() { return "toy/add-toy"; }
-//
-//    @PostMapping("/add")
-//    public String AddToy(
-//            @RequestParam(name = "name") String name,
-//            @RequestParam(name = "type") String type,
-//            @RequestParam(name = "form") String form,
-//            @RequestParam(name = "height") int height,
-//            @RequestParam(name = "cost") double cost
-//    ){
-//        Toy new_toy = new Toy(name, type, form, height, cost);
-//        toyRepository.save(new_toy);
-//        return "redirect:/toy/";
-//    }
-
     @GetMapping("/add")
-    public String addView(Toy toy) { return "toy/add-toy"; }
+    public String addView(Toy toy, Model model) {
+        model.addAttribute("type_list", toyTypeRepository.findAll());
+        return "toy/add-toy";
+    }
 
     @PostMapping("/add")
-    public String AddToy(@Valid Toy toy, BindingResult bindingResult){
+    public String AddToy(Model model, @ModelAttribute("toy") @Valid Toy toy, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("type_list", toyTypeRepository.findAll());
             return "toy/add-toy";
         }
 
-        Toy new_toy = new Toy(toy.getName(), toy.getType(), toy.getForm(),
-                toy.getHeight(), toy.getCost());
-        toyRepository.save(new_toy);
+        toyRepository.save(toy);
         return "redirect:/toy/";
     }
 
     @GetMapping("/detail/{id}")
-    public String detailtoy(
-            @PathVariable Long id,
-            Model model
-    ) {
+    public String detailtoy(@PathVariable Long id, Model model) {
         Toy toy_obj = toyRepository.findById(id).orElseThrow();
         model.addAttribute("one_toy", toy_obj);
 
@@ -69,8 +59,7 @@ public class ToyController {
     }
 
     @GetMapping("/detail/{id}/del")
-    public String delToy(@PathVariable Long id,
-                            Model model) {
+    public String delToy(@PathVariable Long id, Model model) {
         Toy toy_obj = toyRepository.findById(id).orElseThrow();
         toyRepository.delete(toy_obj);
 
@@ -78,12 +67,8 @@ public class ToyController {
     }
 
     @GetMapping("/detail/{id}/upd")
-    public String updateView(
-            @PathVariable Long id,
-            Model model
-    ) {
-        model.addAttribute("toy",
-                toyRepository.findById(id).orElseThrow());
+    public String updateView(@PathVariable Long id, Model model) {
+        model.addAttribute("toy", toyRepository.findById(id).orElseThrow());
         return "toy/update";
     }
 
@@ -123,8 +108,7 @@ public class ToyController {
 //    }
 
     @GetMapping("/filter")
-    public String filter(@RequestParam(name = "name") String name,
-                         Model model) {
+    public String filter(@RequestParam(name = "name") String name, Model model) {
         List<Toy> toyList = toyRepository.findByName(name);
         model.addAttribute("toy_list", toyList);
 

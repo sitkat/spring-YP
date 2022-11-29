@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавление урока</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<form th:action="${'/lesson/add/'}" method="post">
+    <select  name="teacher">
+        <div th:each="element : ${teachers}">
+            <option th:text="${element.name}"></option>
+        </div>
+    </select>
+    <select  name="subject">
+        <div th:each="element : ${subjects}">
+            <option th:text="${element.name}"></option>
+        </div>
+    </select>
+    <br>
+    <button type="submit">Добавить урок</button>
+</form>
+</body>
+</html>
