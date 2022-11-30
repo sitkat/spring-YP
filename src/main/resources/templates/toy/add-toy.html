@@ -17,10 +17,8 @@
     <p/>
     <label>Тип</label>
 
-    <select  name="nameType">
-        <div th:each="element : ${type_list}">
-            <option th:text="${element.nameType}" th:value="${element.id}"></option>
-        </div>
+    <select name="nameType" th:field="*{type}">
+            <option th:each="el : ${type_list}" th:text="${el.nameType}" th:value="${el.id}"></option>
     </select>
 
 <!--    <input th:field="*{type}" type="text" name="type">-->

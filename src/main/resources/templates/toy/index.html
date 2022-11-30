@@ -30,9 +30,9 @@
     </thead>
     <tr th:each="el : ${toy_list}">
         <td th:text="${el.name}"></td>
-        <div th:each="elem : ${type}">
-            <td th:text="${elem.nameType}"></td>
-        </div>
+
+        <td th:if="${el.type} != null" th:text="${el.type.nameType}"></td>
+
         <td th:text="${el.form}"></td>
         <td th:text="${el.height}"></td>
         <td th:text="${el.cost}"></td>

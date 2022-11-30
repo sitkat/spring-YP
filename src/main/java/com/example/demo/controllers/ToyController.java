@@ -39,10 +39,13 @@ public class ToyController {
     }
 
     @PostMapping("/add")
-    public String AddToy(Model model, @ModelAttribute("toy") @Valid Toy toy, BindingResult bindingResult) {
+    public String AddToy(Model model,
+                         @ModelAttribute("toy") @Valid Toy toy,
+                         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("type_list", toyTypeRepository.findAll());
+            Iterable<Type> types = toyTypeRepository.findAll();
+            model.addAttribute("type_list", types);
             return "toy/add-toy";
         }
 
