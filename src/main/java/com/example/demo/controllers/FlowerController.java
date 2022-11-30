@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.models.Flower;
 import com.example.demo.repositories.FlowerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,29 +26,13 @@ public class FlowerController {
         return "flower/index";
     }
 
-//    @GetMapping("/add")
-//    public String addView() {
-//        return "flower/add-flower";
-//    }
-//
-//    @PostMapping("/add")
-//    public String AddFlower(
-//            @RequestParam(name = "name") String name,
-//            @RequestParam(name = "type") String type,
-//            @RequestParam(name = "color") String color,
-//            @RequestParam(name = "smell") String smell,
-//            @RequestParam(name = "cost") double cost
-//    ) {
-//        Flower new_flower = new Flower(name, type, color, smell, cost);
-//        flowerRepository.save(new_flower);
-//        return "redirect:/flower/";
-//    }
-
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @GetMapping("/add")
     public String addView(Flower flower) {
         return "flower/add-flower";
     }
 
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @PostMapping("/add")
     public String AddFlower(@Valid Flower flower, BindingResult bindingResult) {
 
@@ -62,6 +47,7 @@ public class FlowerController {
         return "redirect:/flower/";
     }
 
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @GetMapping("/detail/{id}")
     public String detailFlower(
             @PathVariable Long id,
@@ -73,6 +59,7 @@ public class FlowerController {
         return "flower/info";
     }
 
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @GetMapping("/detail/{id}/del")
     public String delFlower(@PathVariable Long id,
                             Model model) {
@@ -82,6 +69,7 @@ public class FlowerController {
         return "redirect:/flower/";
     }
 
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @GetMapping("/detail/{id}/upd")
     public String updateView(
             @PathVariable Long id,
@@ -92,6 +80,7 @@ public class FlowerController {
         return "flower/update";
     }
 
+    @PreAuthorize("hasAnyAuthority('FLORIST','ADMIN')")
     @PostMapping("/detail/{id}/upd")
     public String updateView(@Valid Flower flower, BindingResult bindingResult) {
 
@@ -103,29 +92,6 @@ public class FlowerController {
 
         return "redirect:/flower/detail/" + flower.getId();
     }
-
-    //    @PostMapping("/detail/{id}/upd")
-//    public String updateView(
-//            @PathVariable Long id,
-//            @RequestParam String name,
-//            @RequestParam String type,
-//            @RequestParam String color,
-//            @RequestParam String smell,
-//            @RequestParam Double cost
-//    ) {
-//        Flower flower = flowerRepository.findById(id).orElseThrow();
-//
-//        flower.setName(name);
-//        flower.setType(type);
-//        flower.setColor(color);
-//        flower.setSmell(smell);
-//        flower.setCost(cost);
-//
-//
-//        flowerRepository.save(flower);
-//
-//        return "redirect:/flower/detail/" + flower.getId();
-//    }
 
     @GetMapping("/filter")
     public String filter(@RequestParam(name = "name") String name,

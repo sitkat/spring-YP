@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Цветы</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header th:insert="/fragments/header :: headerMain"/>
 <h1>Цветы</h1>
 
 <form method="get" action="/flower/filter">
     <div class="search-container">
         <input placeholder="Поиск..." name="name" type="text">
-        <button type="submit" value="Найти"/>
     </div>
 </form>
-
+<p/>
 <p><a href="/flower/add" class="button-add">Добавить цветок</a></p>
 
 <table>
